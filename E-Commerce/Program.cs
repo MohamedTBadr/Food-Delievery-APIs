@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Presistence.Data;
 using Presistence;
 using System.Threading.Tasks;
+using Presistence.Repository;
+using Services;
 
 namespace E_Commerce
 {
@@ -25,7 +27,12 @@ namespace E_Commerce
                     options.UseSqlServer(ConnectionString);
 
                 });
+
+            builder.Services.AddScoped<IServiceManager , ServicesManger>();
             builder.Services.AddScoped<IDbIntialize, DbIntialize>();
+            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+
+            builder.Services.AddAutoMapper(typeof(Services.AssemblyRefrence).Assembly);
 
             var app = builder.Build();
             await IntialDbAsync(app);
@@ -36,9 +43,8 @@ namespace E_Commerce
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
 
 

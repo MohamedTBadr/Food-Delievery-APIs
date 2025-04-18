@@ -64,7 +64,10 @@ namespace Presistence
                     await context.SaveChangesAsync();
                 }
             }
-        }catch(Exception E){ }
+        }catch(Exception E){
+
+                Console.WriteLine("Error Occur");
+            }
 
         }
     }

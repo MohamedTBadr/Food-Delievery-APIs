@@ -24,7 +24,7 @@ namespace Presistence.Repository
             Context.Set<TEntity>().Remove(entity);
         }
 
-        public async Task<TEntity> Get(TKey Key)
+        public async Task<TEntity> GetAsync(TKey Key)
         =>
             await Context.Set<TEntity>().FindAsync(Key);
         
@@ -38,5 +38,16 @@ namespace Presistence.Repository
         {
             Context.Set<TEntity>().Update(entity);
         }
+
+      async  Task<TEntity> IGenericRepository<TEntity, TKey>.GetAsync(ISpecifications<TEntity> specifications)
+        =>
+        await    SpecificationsEvalutor.CreateQuery(Context.Set<TEntity>(),specifications ).FirstOrDefaultAsync();
+
+        
+
+       async Task<IEnumerable<TEntity>> IGenericRepository<TEntity, TKey>.GetAllAsync(ISpecifications<TEntity> specifications)
+        =>
+            await SpecificationsEvalutor.CreateQuery(Context.Set<TEntity>(), specifications).ToListAsync();
+        
     }
 }
