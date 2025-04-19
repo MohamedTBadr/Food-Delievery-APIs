@@ -23,11 +23,8 @@ namespace Services.Specifications
 
         //all prpduct
         //use sorting & filtration
-        public ProductWithBrandAndTypeSpecifications(int? brandId,int?TypeId,ProductSortingOptions options)
-            :base(product=>
-            (!brandId.HasValue || product.ProductBrandId==brandId.Value )
-            &&
-            (!TypeId.HasValue || product.ProductTypeId == TypeId.Value)
+        public ProductWithBrandAndTypeSpecifications(ProductQueryParams Params)
+            : base(CreateCriteria(Params)
             )
         {
 
@@ -35,26 +32,44 @@ namespace Services.Specifications
             //Add Includes
             AddInclude(p => p.ProductBrand);
             AddInclude(p => p.ProductType);
+            ApplySorting(Params.Options);
 
+            ApplyPagination(Params.PageSize, Params.PageIndex);
+
+        }
+        private static Expression<Func<Product, bool>> CreateCriteria(ProductQueryParams Params)
+        {
+            return product =>
+                        (!Params.BrandId.HasValue || product.ProductBrandId == Params.BrandId.Value)
+                        &&
+                        (!Params.TypeId.HasValue || product.ProductTypeId == Params.TypeId.Value)
+                        &&
+                        (string.IsNullOrWhiteSpace(Params.Search)|| product.Name.ToLower().Contains(Params.Search.ToLower()))
+                        ;
+        }
+
+        private void ApplySorting(ProductSortingOptions options)
+        {
             switch (options)
             {
                 case ProductSortingOptions.NameAsc:
-                    AddOrderBy(p=>p.Name);
+                    AddOrderBy(p => p.Name);
                     break;
                 case ProductSortingOptions.NameDesc:
-                    AddOrderByDesc(p=>p.Name);
+                    AddOrderByDesc(p => p.Name);
                     break;
                 case ProductSortingOptions.PriceAsc:
-                    AddOrderBy(p=>p.Price);
+                    AddOrderBy(p => p.Price);
                     break;
                 case ProductSortingOptions.PriceDesc:
-                    AddOrderByDesc(p=>p.Price);
+                    AddOrderByDesc(p => p.Price);
                     break;
                 default:
                     break;
             }
-
-
         }
+
+
+
     }
 }

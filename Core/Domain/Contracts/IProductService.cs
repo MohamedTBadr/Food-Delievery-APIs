@@ -1,11 +1,12 @@
-﻿using Shared.DataTransferObject.Products;
+﻿using Shared.DataTransferObject;
+using Shared.DataTransferObject.Products;
 
 
 namespace Domain.Contracts
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductResponse>> GetAllProductAsync(int? brandId ,int? typeId,ProductSortingOptions options);
+        Task<PaginatedObject<ProductResponse>> GetAllProductAsync(ProductQueryParams Params);
 
 
         Task<ProductResponse> GetProductAsync(int id);

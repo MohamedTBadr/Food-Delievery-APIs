@@ -4,19 +4,24 @@ using Shared.DataTransferObject.Products;
 using Domain.Models;
 using Services.Specifications;
 using System;
+using Shared.DataTransferObject;
+using Domain.Exceptions;
 namespace Services
 {
     internal class ProductServices(IUnitOfWork UnitOfWork , IMapper Mapper ) : IProductService
     {
-        public async Task<IEnumerable<ProductResponse>> GetAllProductAsync(int? brandId, int? typeId,ProductSortingOptions options)
+        public async Task<PaginatedObject<ProductResponse>> GetAllProductAsync(ProductQueryParams parameters)
         {
-            var Specifications = new ProductWithBrandAndTypeSpecifications(brandId ,typeId,options);
+            var Specifications = new ProductWithBrandAndTypeSpecifications(parameters);
             var Repo = UnitOfWork.GetRepository<Product,int>();
                 
             var Products= await Repo.GetAllAsync(Specifications);
 
 
-            return Mapper.Map<IEnumerable<Product>,IEnumerable<ProductResponse>>(Products);
+            var data= Mapper.Map<IEnumerable<Product>,IEnumerable<ProductResponse>>(Products);
+            var PageCount = data.Count();
+            var TotalCount = await UnitOfWork.GetRepository<Product, int>().CountAsync(new ProductCountSpecifications(parameters));
+            return new PaginatedObject<ProductResponse>(parameters.PageIndex,PageCount,TotalCount,data);
 
         }
 
@@ -24,10 +29,12 @@ namespace Services
         {
             var Specifications = new ProductWithBrandAndTypeSpecifications(id);
 
-            var Repo = await  UnitOfWork.GetRepository<Product, int>().GetAsync(Specifications);
+            var Product = await  UnitOfWork.GetRepository<Product, int>().GetAsync(Specifications)
+                ?? throw new ProductNotFoundException(id)
+                ;
 
 
-            return Mapper.Map<Product,ProductResponse>(Repo);  
+            return Mapper.Map<Product,ProductResponse>(Product);  
 
 
         }

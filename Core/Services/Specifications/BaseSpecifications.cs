@@ -19,11 +19,28 @@ namespace Services.Specifications
         public Expression<Func<TEntity, bool>> Criteria {  get; private set; }
         public List<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
 
-        Expression<Func<TEntity, object>> OrderBy { get; private set; }
-        
-        Expression<Func<TEntity, object>> OrderByDesc
+        public Expression<Func<TEntity, object>> OrderBy { get; private set; }
+
+
+        public Expression<Func<TEntity, object>> OrderByDesc
   { get; private set; }
 
+
+       public int Skip { get; private set; }
+
+        public int Take { get; private set; }
+
+        public bool IsPaginated { get; private set; }
+
+        protected void ApplyPagination(int PageSize,int PageIndex)
+        {
+            IsPaginated= true;
+            
+            Take=PageSize;
+
+            Skip=(PageIndex-1)*PageSize;
+
+        }
 
         protected void AddInclude(Expression<Func<TEntity, object>> include)
         {

@@ -25,7 +25,21 @@ namespace Presistence.Repository
                 currentQuery.Include(include)
                 );
             }
-            return Query;
+
+            if (specifications.OrderBy is not null)
+            {
+                Query = Query.OrderBy(specifications.OrderBy);
+            }
+            else if (specifications.OrderByDesc is not null)
+            {
+                Query=Query.OrderByDescending(specifications.OrderByDesc);
+            }
+
+            if(specifications.IsPaginated)
+            {
+                Query=Query.Skip(specifications.Skip).Take(specifications.Take);
+            }
+                return Query;
         } 
     }
 }
