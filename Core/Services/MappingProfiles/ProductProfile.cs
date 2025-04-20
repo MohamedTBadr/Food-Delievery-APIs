@@ -5,7 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Domain.Models;
+using Domain.Models.ProductModule;
 using Shared.DataTransferObject.Products;
 
 namespace Services.MappingProfiles

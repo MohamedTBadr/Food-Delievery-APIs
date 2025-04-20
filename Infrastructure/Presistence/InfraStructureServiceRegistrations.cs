@@ -4,27 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Contracts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Presistence.Data;
 using Presistence.Repository;
+using StackExchange.Redis;
 
 namespace Presistence
 {
     public static class InfraStructureServiceRegistrations
     {
-
-        public static IServiceCollection AddInfraStructureServices(this IServiceCollection Services ,IConfiguration configuration)
+        public static IServiceCollection AddInfraStructureServices(this IServiceCollection Services, IConfiguration configuration)
         {
-           Services.AddDbContext<StoreDbContext>(options =>
+            Services.AddDbContext<StoreDbContext>(options =>
             {
-                var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+                var ConnectionString = configuration.GetConnectionString("DefaultConnection");
 
                 options.UseSqlServer(ConnectionString);
-
             });
 
+
+            Services.AddSingleton<IConnectionMultiplexer, ConnectionMultiplexer>((_) =>
+            {
+              return  ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));
+            });
+
+
             Services.AddScoped<IDbIntialize, DbIntialize>();
+
+
             Services.AddScoped<IUnitOfWork, UnitOfWork>();
             return Services;
         }

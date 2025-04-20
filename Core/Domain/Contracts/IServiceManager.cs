@@ -9,7 +9,7 @@ namespace Domain.Contracts
     public interface IServiceManager
     {
         public IProductService ProductService { get;}
-
+        public IBasketService CustomerBasketService { get;}
 
     }
 }

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Domain.Contracts;
 using Shared.DataTransferObject.Products;
-using Domain.Models;
 using Services.Specifications;
 using System;
 using Shared.DataTransferObject;
 using Domain.Exceptions;
+using Domain.Models.ProductModule;
 namespace Services
 {
     internal class ProductServices(IUnitOfWork UnitOfWork , IMapper Mapper ) : IProductService
