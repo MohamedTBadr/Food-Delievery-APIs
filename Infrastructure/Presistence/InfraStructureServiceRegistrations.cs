@@ -7,6 +7,7 @@ using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Presistence.Authentication;
 using Presistence.Data;
 using Presistence.Repository;
 using StackExchange.Redis;
@@ -25,15 +26,23 @@ namespace Presistence
             });
 
 
+            Services.AddDbContext<StoreIdentityDbContext>(options =>
+            {
+                var ConnectionString = configuration.GetConnectionString("IdentityConnection");
+
+                options.UseSqlServer(ConnectionString);
+            });
+
+
             Services.AddSingleton<IConnectionMultiplexer, ConnectionMultiplexer>((_) =>
             {
               return  ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection"));
             });
 
-
+             
             Services.AddScoped<IDbIntialize, DbIntialize>();
 
-
+            Services.AddScoped<IBasketRepository,CustomerbasketRepository>();
             Services.AddScoped<IUnitOfWork, UnitOfWork>();
             return Services;
         }

@@ -6,6 +6,7 @@ using System;
 using Shared.DataTransferObject;
 using Domain.Exceptions;
 using Domain.Models.ProductModule;
+using ServicesAbstractions;
 namespace Services
 {
     internal class ProductServices(IUnitOfWork UnitOfWork , IMapper Mapper ) : IProductService

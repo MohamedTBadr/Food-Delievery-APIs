@@ -22,8 +22,8 @@ namespace E_Commerce
 
             builder.Services.AddControllers();
             builder.Services.AddInfraStructureServices(builder.Configuration);
-            builder.Services.AddApplicationServices();
-            builder.Services.AddWebApplicationServices();
+            builder.Services.AddApplicationServices(builder.Configuration);
+            builder.Services.AddWebApplicationServices(builder.Configuration);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
           
           
@@ -41,7 +41,7 @@ namespace E_Commerce
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthorization();
-
+            app.UseAuthentication();
 
             app.MapControllers();
 

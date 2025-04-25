@@ -2,7 +2,7 @@
 using Shared.DataTransferObject.Products;
 
 
-namespace Domain.Contracts
+namespace ServicesAbstractions
 {
     public interface IProductService
     {

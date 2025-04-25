@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using ServicesAbstractions;
 using Shared.DataTransferObject.Basket;
 
 namespace Presentation.Controllers
@@ -15,7 +16,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult<BasketDTO>> Get(string id)
         {
-            var Basket=serviceManger.CustomerBasketService.GetbasketsAsync(id);
+            var Basket=serviceManger.BasketService.GetAsync(id);
             return Ok(Basket);
         }
 
@@ -24,7 +25,8 @@ namespace Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult<BasketDTO>> Update(BasketDTO BasketDto)
         {
-            var basket = await serviceManger.CustomerBasketService.UpdateBasketAsync(BasketDto);
+            //var basket = await serviceManger.BasketService.UpdateBasketAsync(BasketDto);
+            var basket = await serviceManger.BasketService.UpdateAsync(BasketDto);
             return Ok(basket);
 
         }
@@ -34,7 +36,7 @@ namespace Presentation.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<BasketDTO>> Delete(string Id)
         {
-             await serviceManger.CustomerBasketService.DeleteBasketAsync(Id);
+             await serviceManger.BasketService.DeleteAsync(Id);
             return NoContent();
         }
 

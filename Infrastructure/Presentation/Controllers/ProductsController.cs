@@ -1,5 +1,6 @@
 ﻿using Domain.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using ServicesAbstractions;
 using Shared.DataTransferObject;
 using Shared.DataTransferObject.Products;
 

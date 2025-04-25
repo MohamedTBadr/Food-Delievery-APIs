@@ -12,7 +12,7 @@ using Shared.DataTransferObject.Basket;
 
 namespace Services
 {
-    internal class BasketService(IBasketReposotpry basketRepository,IMapper mapper) : ServicesAbstractions.IBasketService
+    internal class BasketService(IBasketRepository basketRepository,IMapper mapper) : IBasketService
     {
         public async Task<bool> DeleteAsync(string id)
         {

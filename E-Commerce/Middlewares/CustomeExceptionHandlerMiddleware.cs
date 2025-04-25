@@ -12,7 +12,7 @@ namespace E_Commerce.Middlewares
     {
         private readonly RequestDelegate _Next;
         private readonly ILogger<CustomExceptionHandlerMiddleware> _logger;
-        public CustomExceptionHandlerMiddleware(RequestDelegate next, ILogger<CustomeExceptionHandlerMiddleware> logger)
+        public CustomExceptionHandlerMiddleware(RequestDelegate next, ILogger<CustomExceptionHandlerMiddleware> logger)
         {
             this._Next = next;
             _logger = logger;
@@ -48,13 +48,21 @@ namespace E_Commerce.Middlewares
             };
             response.StatusCode = ex switch
             {
-                NotFoundException => (int)HttpStatusCode.NotFound,
-                _ => (int)HttpStatusCode.InternalServerError
+                NotFoundException => StatusCodes.Status404NotFound,
+                UnauthorizedException=> StatusCodes.Status401Unauthorized,
+                BadRequestException BadRequest=>GetValidationErrors(BadRequest,response),
+                _ => StatusCodes.Status500InternalServerError
             };
             Request.Response.StatusCode = response.StatusCode;
             var JsonResult = JsonSerializer.Serialize(response);
 
             await Request.Response.WriteAsync(JsonResult);
+        }
+
+        private static int GetValidationErrors(BadRequestException badRequest, ErrorDetails response)
+        {
+                response.Errors=badRequest.Errors;
+            return StatusCodes.Status400BadRequest;
         }
 
         private static async Task HandleNotFoundEndPointAsync(HttpContext Request)

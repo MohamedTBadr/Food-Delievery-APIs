@@ -6,11 +6,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Contracts;
 using Domain.Models.BasketModule;
+using ServicesAbstractions;
 using StackExchange.Redis;
 
 namespace Presistence.Repository
 {
-    public class CustomerbasketRepository(IConnectionMultiplexer multiplexer) : IBasketService
+    public class CustomerbasketRepository(IConnectionMultiplexer multiplexer) : IBasketRepository
     {
         private readonly IDatabase _Database=multiplexer.GetDatabase();
 

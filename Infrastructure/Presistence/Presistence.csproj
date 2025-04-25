@@ -16,4 +16,8 @@
     <ProjectReference Include="..\..\Core\Services\Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Authentication\Migrations\" />
+  </ItemGroup>
+
 </Project>

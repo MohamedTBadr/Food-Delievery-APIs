@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using Domain.Contracts;
 using Domain.Models.ProductModule;
 using Microsoft.EntityFrameworkCore;
+using Presistence.Authentication;
 using Presistence.Data;
 
 namespace Presistence
 {
-    public class DbIntialize(StoreDbContext context) : IDbIntialize
+    public class DbIntialize(StoreDbContext context,StoreIdentityDbContext IdentityContext) : IDbIntialize
     {
         public async Task IntializeAsync()
         {
@@ -68,6 +69,18 @@ namespace Presistence
 
                 Console.WriteLine("Error Occur");
             }
+
+        }
+
+     public async  Task  IntializeIdentityAsync()
+        {
+            //if ( (await IdentityContext.Database.GetPendingMigrationsAsync()).Any())
+            //{
+            //   await context.Database.MigrateAsync();
+            //}
+
+            
+
 
         }
     }

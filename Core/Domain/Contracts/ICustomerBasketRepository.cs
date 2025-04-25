@@ -8,7 +8,7 @@ using Shared.DataTransferObject.Basket;
 
 namespace Domain.Contracts
 {
-    public interface IBasketReposotpry
+    public interface IBasketRepository
     {
         Task<CustomerBasket?> GetbasketsAsync(string id);
 
