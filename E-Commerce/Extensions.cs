@@ -20,7 +20,7 @@ namespace E_Commerce
 
 
 
-        public static IServiceCollection AddWebApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddWebApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ApiBehaviorOptions>(options =>
             {

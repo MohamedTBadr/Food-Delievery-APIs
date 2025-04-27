@@ -9,6 +9,9 @@ using E_Commerce.Middlewares;
 using Microsoft.AspNetCore.Mvc;
 using Shared.ErrorModels;
 using E_Commerce.Factories;
+using Domain.Models.AuthenticationModule;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 
 namespace E_Commerce
 {

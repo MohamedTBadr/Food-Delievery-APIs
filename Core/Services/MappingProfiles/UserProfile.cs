@@ -14,7 +14,7 @@ namespace Services.MappingProfiles
 
         public UserProfile()
         {
-            CreateMap<AddressDTO,Address>().ReverseMap()
+            CreateMap<AddressDTO, Address>().ReverseMap();
         }
 
     }

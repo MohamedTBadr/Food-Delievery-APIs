@@ -27,6 +27,22 @@ namespace Presistence.Repository
 
         }
 
+        public IGenericRepository<TEntity, int> GetRepository<TEntity>() where TEntity : BaseEntity<int>
+        {
+            var TypeName = typeof(TEntity).Name;
+
+            if (_repositories.ContainsKey(TypeName))
+            {
+                return (IGenericRepository<TEntity, int>)_repositories[TypeName];
+
+            }
+            var New = new GenericRepository<TEntity, int>(Context);
+            _repositories.Add(TypeName, New);
+            return New;
+
+
+        }
+
         public Task<int> saveChangesAsync()
         {
             throw new NotImplementedException();
