@@ -45,7 +45,9 @@ namespace Domain.Models.OrderModule
             Items = items;
             Address = address;
             DeliveryMethod = deliveryMethod;
-            //PaymentIntentId = paymentIntentId;
+            DeliveryMethodId = deliveryMethod.Id;
+            PaymentStatus = PaymentStatus.pending;
+            PaymentIntentId = string.Empty;
             Subtotal = subtotal;
         }
     }

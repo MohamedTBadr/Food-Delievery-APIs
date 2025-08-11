@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace Shared.Authentication
 {
-    public record LoginRequest([EmailAddress]string Email,string Password, string DisplayName, string Token);
+    public record LoginRequest([EmailAddress]string Email,string Password);
     
 }

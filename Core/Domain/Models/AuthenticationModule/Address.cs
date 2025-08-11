@@ -9,16 +9,9 @@ public class Address
     public string FirstName { get; set; }=default!;
     public string LastName { get; set; }=default!;
 
-
-
     public ApplicationUser User { get; set; }
 
-
     public string UserId {  get; set; }
-
-
-
-
 }
 
 

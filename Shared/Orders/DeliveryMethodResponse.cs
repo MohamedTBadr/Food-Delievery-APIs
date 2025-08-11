@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Orders
 {
-    public record  DeliveryMethodResponse
+    public record DeliveryMethodResponse
     {
         public int Id;
         public string ShortName { get; set; }

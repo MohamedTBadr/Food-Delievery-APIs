@@ -12,18 +12,15 @@ namespace Shared.Orders
         public Guid Id { get; set; }
         public string UserEmail { get; set; }
 
-
         public DateTimeOffset DateTimeOffset { get; set; } = DateTimeOffset.Now;
 
         public IEnumerable<OrderItemDTO> Items { get; set; } = new List<OrderItemDTO>();
 
         public AddressDTO Address { get; set; }
 
-
         public int DeliveryMethod { get; set; }
 
-
-        public string PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; } ="Pending";
 
         public string PaymentIntentId { get; set; }
 
@@ -39,8 +36,7 @@ namespace Shared.Orders
 
         public decimal Price { get; set; }
 
-
-        public int Quantity { get; set; }
+        public int Quantity {  get; set; }
 
     }
 }

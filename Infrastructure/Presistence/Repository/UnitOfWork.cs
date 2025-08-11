@@ -43,9 +43,9 @@ namespace Presistence.Repository
 
         }
 
-        public Task<int> saveChangesAsync()
+        public async Task<int> saveChangesAsync()
         {
-            throw new NotImplementedException();
+            return await Context.SaveChangesAsync();
         }
     }
 }

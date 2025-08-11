@@ -17,6 +17,7 @@ namespace Services
 {
     public class OrderService(IMapper mapper,IUnitOfWork unitOfWork,IBasketRepository basketRepository) : IOrderService
     {
+
         public async Task<OrderResponse> CreateAsync(OrderRequest Request, string email)
         {
             var Basket=await basketRepository.GetbasketsAsync(Request.BasketId)??throw new BasketNotFoundException(Request.BasketId);
@@ -42,10 +43,10 @@ namespace Services
             var subtotal = items.Sum(p=>p.Price * p.Quantity);
             var order=new Order(email,items,address,DeliveryMethod,subtotal);
 
-            unitOfWork.GetRepository<Order,Guid>().Add(order);
-          await  unitOfWork.saveChangesAsync();
-            
-
+          
+                unitOfWork.GetRepository<Order, Guid>().Add(order);
+                await unitOfWork.saveChangesAsync();
+         
             return mapper.Map<OrderResponse>(order);
 
 

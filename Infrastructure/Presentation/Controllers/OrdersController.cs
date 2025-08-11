@@ -39,7 +39,7 @@ namespace Presentation.Controllers
 
         ///GetAll   
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderResponse>>> GetAllOrder(string Email)
+        public async Task<ActionResult<IEnumerable<OrderResponse>>> GetAllOrder()
         {
             return Ok(await service.OrderService.GetAllAsync(GetEmailFromToken()));
         }

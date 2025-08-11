@@ -28,6 +28,7 @@ namespace E_Commerce
 
             });
             services.AddSwaggerServices();
+            services.Configure<JWTOptions>(configuration.GetSection("JWTOptions"));
 
             ConfigureJWT(services,configuration);
             return services;
@@ -39,6 +40,7 @@ namespace E_Commerce
 
             var DbIntialize = Scope.ServiceProvider.GetRequiredService<IDbIntialize>();
             await DbIntialize.IntializeAsync();
+            await DbIntialize.IntializeIdentityAsync();
             return app;
         }
 

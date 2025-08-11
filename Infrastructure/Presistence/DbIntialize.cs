@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Contracts;
+using Domain.Models.OrderModule;
 using Domain.Models.ProductModule;
 using Microsoft.EntityFrameworkCore;
 using Presistence.Authentication;
@@ -17,10 +18,10 @@ namespace Presistence
         public async Task IntializeAsync()
         {
             //production =>Seeding + Intialize Db
-            //if ( (await context.Database.GetPendingMigrationsAsync()).Any())
-            //{
-            //   await context.Database.MigrateAsync();
-            //}
+            if ((await context.Database.GetPendingMigrationsAsync()).Any())
+            {
+               await context.Database.MigrateAsync();
+            }
 
             //Dev =>Seeding
             try { 
@@ -65,21 +66,37 @@ namespace Presistence
                     await context.SaveChangesAsync();
                 }
             }
-        }catch(Exception E){
 
-                Console.WriteLine("Error Occur");
+
+
+
+                if (!context.Set<DeliveryMethod>().Any())
+                {
+                    var data = await File.ReadAllTextAsync(@"../Infrastructure\Presistence\Seeding\delivery.json");
+
+                    var Types = JsonSerializer.Deserialize<List<DeliveryMethod>>(data);
+
+                    if (Types is not null && Types.Any())
+                    {
+                        context.Set<DeliveryMethod>().AddRange(Types);
+                        await context.SaveChangesAsync();
+                    }
+                }
+            }
+            catch(Exception E){
+                Console.WriteLine($"Error Occurred during seeding: {E.Message}");
             }
 
         }
 
      public async  Task  IntializeIdentityAsync()
         {
-            //if ( (await IdentityContext.Database.GetPendingMigrationsAsync()).Any())
-            //{
-            //   await context.Database.MigrateAsync();
-            //}
+            if ((await IdentityContext.Database.GetPendingMigrationsAsync()).Any())
+            {
+                await IdentityContext.Database.MigrateAsync();
+            }
 
-            
+
 
 
         }

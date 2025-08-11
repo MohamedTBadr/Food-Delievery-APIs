@@ -16,7 +16,6 @@ namespace Domain.Models.AuthenticationModule;
     public Address Address { get; set; }    
 
 
-
     }
 
 

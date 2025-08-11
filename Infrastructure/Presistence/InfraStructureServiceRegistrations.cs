@@ -8,6 +8,7 @@ using Presistence.Authentication;
 using Presistence.Data;
 using Presistence.Repository;
 using StackExchange.Redis;
+using System;
 
 
 
@@ -22,7 +23,13 @@ namespace Presistence
             {
                 var ConnectionString = configuration.GetConnectionString("DefaultConnection");
 
-                options.UseSqlServer(ConnectionString);
+                options.UseSqlServer(ConnectionString, sql =>
+                {
+                    sql.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(10),
+                        errorNumbersToAdd: null);
+                });
             });
 
            
@@ -31,7 +38,13 @@ namespace Presistence
             {
                 var ConnectionString = configuration.GetConnectionString("IdentityConnection");
 
-                options.UseSqlServer(ConnectionString);
+                options.UseSqlServer(ConnectionString, sql =>
+                {
+                    sql.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(10),
+                        errorNumbersToAdd: null);
+                });
             });
 
 

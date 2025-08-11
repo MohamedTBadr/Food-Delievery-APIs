@@ -16,7 +16,7 @@ using ServicesAbstractions;
 using Shared.Authentication;
 
 namespace Services
-{
+{ 
     public class AuthenticationService(UserManager<ApplicationUser> UserManager,IOptions<JWTOptions> options,IMapper mapper) : IAuthenticationService
     {
         public async Task<bool> CheckEmailAsync(string email)
@@ -74,15 +74,16 @@ namespace Services
         {
 //check If User Exist
 var User= await UserManager.FindByEmailAsync(request.Email)??throw new UserNotFoundException(request.Email);
-//
+
+           
         var Isvalid=await UserManager.CheckPasswordAsync(User,request.Password);
-            if (Isvalid) return new(request.Email,request.Password,request.DisplayName,"JWT");
+            if (Isvalid) return new(request.Email,request.Password,User.DisplayName,await GenerateTokenAsync(User));
 
             throw new UnauthorizedException();
 //
 
         }
-
+        
         public async Task<UserResponse> RegisterAsync(RegisterRequest request)
         {
             var User = new ApplicationUser

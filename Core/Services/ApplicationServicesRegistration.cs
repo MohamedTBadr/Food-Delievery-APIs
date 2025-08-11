@@ -20,7 +20,7 @@ namespace Services
             Services.AddAutoMapper(typeof(Services.AssemblyRefrence).Assembly);
 
 
-            Services.Configure<JWTOptions>(options=>configuration.GetSection("JWTOptions"));
+            Services.Configure<JWTOptions>(options=> configuration.GetSection("JWTOptions"));
 
 
 

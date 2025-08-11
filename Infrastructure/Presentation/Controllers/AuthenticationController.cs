@@ -50,7 +50,7 @@ namespace Presentation.Controllers
         
         [Authorize]
 
-        [HttpGet("Address")]
+        [HttpPut("Address")]
         public async Task<ActionResult<bool>> UpdateAddress(AddressDTO addressDTO)
         {
             var email = User.FindFirstValue(ClaimTypes.Email);

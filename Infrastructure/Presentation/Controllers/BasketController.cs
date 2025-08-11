@@ -16,7 +16,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult<BasketDTO>> Get(string id)
         {
-            var Basket=serviceManger.BasketService.GetAsync(id);
+            var Basket=await serviceManger.BasketService.GetAsync(id);
             return Ok(Basket);
         }
 

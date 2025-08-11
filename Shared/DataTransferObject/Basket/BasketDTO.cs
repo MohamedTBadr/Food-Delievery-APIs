@@ -10,7 +10,7 @@ namespace Shared.DataTransferObject.Basket
     {
         public string Id { get; set; }
 
-        public ICollection<BasketDTO> BasketItems { get; set; }
+        public ICollection<basketItemDTo> BasketItems { get; set; }
 
     }
 }
